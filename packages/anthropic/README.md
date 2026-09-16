@@ -1,6 +1,6 @@
 # @wappajs/anthropic
 
-Anthropic (Claude) provider for [wappa](https://github.com/sifenfisaha/wappa) WhatsApp
+Anthropic (Claude) provider for [wappa](https://github.com/sifenfisaha/wappajs) WhatsApp
 agents. Maps one wappa `generate()` call onto the Anthropic Messages API, including
 tool-calling.
 
@@ -27,7 +27,7 @@ new AnthropicProvider({ model: 'claude-sonnet-5', apiKey: '...', maxTokens: 1024
 The default model is `claude-sonnet-5`. `AnthropicClientLike` lets you inject a stub in
 tests, and the mapping helpers are exported if you need to inspect what gets sent.
 
-Docs: https://github.com/sifenfisaha/wappa/blob/main/docs/providers.md
+Docs: https://github.com/sifenfisaha/wappajs/blob/main/docs/providers.md
 
 ## License
 

@@ -1,7 +1,7 @@
 # @wappajs/cloud-api
 
 Official **WhatsApp Cloud API** transport for
-[wappa](https://github.com/sifenfisaha/wappa) — a Meta Business webhook receiver plus Graph
+[wappa](https://github.com/sifenfisaha/wappajs) — a Meta Business webhook receiver plus Graph
 API sender, implemented directly against the HTTP API (no Meta SDK dependency).
 
 ```bash
@@ -37,7 +37,7 @@ await bot.start();
 - Bring your own HTTP server, or let the transport start one
 
 Meta dashboard setup — app, phone number, webhook, app secret — is walked through in
-https://github.com/sifenfisaha/wappa/blob/main/docs/transports/cloud-api.md
+https://github.com/sifenfisaha/wappajs/blob/main/docs/transports/cloud-api.md
 
 ## License
 

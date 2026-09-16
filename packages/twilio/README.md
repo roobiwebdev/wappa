@@ -1,6 +1,6 @@
 # @wappajs/twilio
 
-Twilio **WhatsApp** transport for [wappa](https://github.com/sifenfisaha/wappa) — run an
+Twilio **WhatsApp** transport for [wappa](https://github.com/sifenfisaha/wappajs) — run an
 agent on a Twilio-provisioned WhatsApp number (BSP). Implemented against Twilio's
 form-encoded webhook and Messages REST API directly, with no Twilio SDK dependency.
 
@@ -34,7 +34,7 @@ await bot.start();
 - Media in and out via Twilio's media URLs
 - Works with the Twilio WhatsApp Sandbox for development
 
-Setup walkthrough: https://github.com/sifenfisaha/wappa/blob/main/docs/transports
+Setup walkthrough: https://github.com/sifenfisaha/wappajs/blob/main/docs/transports
 
 ## License
 

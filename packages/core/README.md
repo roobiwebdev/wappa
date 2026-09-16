@@ -1,6 +1,6 @@
 # @wappajs/core
 
-Transport-agnostic core of [wappa](https://github.com/sifenfisaha/wappa) — a TypeScript
+Transport-agnostic core of [wappa](https://github.com/sifenfisaha/wappajs) — a TypeScript
 framework for building WhatsApp agents. This package never imports a WhatsApp library: it
 speaks a normalized message model, owns the LLM tool-call loop, and lets you plug in a
 transport and a provider.
@@ -56,7 +56,7 @@ Providers: [`@wappajs/anthropic`](https://www.npmjs.com/package/@wappajs/anthrop
 [`@wappajs/openai`](https://www.npmjs.com/package/@wappajs/openai).
 Scaffolder: `npm create wappa-agent my-bot`.
 
-Full documentation: https://github.com/sifenfisaha/wappa
+Full documentation: https://github.com/sifenfisaha/wappajs
 
 ## License
 

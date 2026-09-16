@@ -5,14 +5,14 @@
   "type": "module",
   "license": "MIT",
   "author": "Sifen Fisaha",
-  "homepage": "https://github.com/sifenfisaha/wappa#readme",
+  "homepage": "https://github.com/sifenfisaha/wappajs#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/sifenfisaha/wappa.git",
+    "url": "git+https://github.com/sifenfisaha/wappajs.git",
     "directory": "packages/openai"
   },
   "bugs": {
-    "url": "https://github.com/sifenfisaha/wappa/issues"
+    "url": "https://github.com/sifenfisaha/wappajs/issues"
   },
   "engines": {
     "node": ">=20"

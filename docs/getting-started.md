@@ -52,7 +52,7 @@ want to modify the framework itself.
 ## Working from a clone
 
 ```bash
-git clone https://github.com/sifenfisaha/wappa.git
+git clone https://github.com/sifenfisaha/wappajs.git
 cd wappa
 npm install
 npm run build          # tsc -b — builds every package's dist/

@@ -1,6 +1,6 @@
 # create-wappa-agent
 
-Project scaffolder for [wappa](https://github.com/sifenfisaha/wappa) — the TypeScript
+Project scaffolder for [wappa](https://github.com/sifenfisaha/wappajs) — the TypeScript
 framework for building WhatsApp agents.
 
 ```bash
@@ -26,7 +26,7 @@ Non-interactive use:
 npm create wappa-agent my-bot -- --transport baileys --provider anthropic
 ```
 
-Full documentation: https://github.com/sifenfisaha/wappa
+Full documentation: https://github.com/sifenfisaha/wappajs
 
 ## License
 

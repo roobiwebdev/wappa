@@ -1,6 +1,6 @@
 # @wappajs/openai
 
-OpenAI provider for [wappa](https://github.com/sifenfisaha/wappa) WhatsApp agents — and for
+OpenAI provider for [wappa](https://github.com/sifenfisaha/wappajs) WhatsApp agents — and for
 any **OpenAI-compatible** server (Ollama, vLLM, OpenRouter, Together, LM Studio) via
 `baseURL`.
 
@@ -31,7 +31,7 @@ new OpenAIProvider({
 The default model is `gpt-5`. `toOpenAIMessages`, `toOpenAITools` and `fromOpenAIResponse`
 are exported for tests and custom mapping.
 
-Docs: https://github.com/sifenfisaha/wappa/blob/main/docs/providers.md
+Docs: https://github.com/sifenfisaha/wappajs/blob/main/docs/providers.md
 
 ## License
 
