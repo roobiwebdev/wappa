@@ -3,14 +3,14 @@
 `TwilioTransport` runs your bot through **Twilio's WhatsApp Business API**. Twilio is a
 WhatsApp **BSP** (Business Solution Provider): your WhatsApp number lives with Twilio,
 inbound messages arrive as form-encoded webhooks, and outbound messages go through the
-Twilio Messages REST API with basic auth. No Twilio SDK — just `node:http`,
+Twilio Messages REST API with basic auth. No Twilio SDK, just `node:http`,
 `node:crypto`, and the global `fetch`.
 
 Like the Cloud API, this is an **official, ToS-safe** path: no ban risk, fine for
 production. Choose it when you already live in the Twilio ecosystem (SMS, Voice,
 Studio) or want Twilio to own the Meta relationship; choose
 [`@wappajs/cloud-api`](cloud-api.md) to talk to Meta directly. Twilio WhatsApp is
-**DM-only** — every mapped message has `isGroup: false` and `chatId === senderId` (the
+**DM-only**, so every mapped message has `isGroup: false` and `chatId === senderId` (the
 sender address verbatim, e.g. `whatsapp:+15551234567`).
 
 ## Options
@@ -19,25 +19,25 @@ sender address verbatim, e.g. `whatsapp:+15551234567`).
 import { TwilioTransport } from '@wappajs/twilio';
 
 const transport = new TwilioTransport({
-  accountSid: process.env.TWILIO_ACCOUNT_SID!,      // required — ACxxxx
-  authToken: process.env.TWILIO_AUTH_TOKEN!,        // required — basic auth AND signature validation
-  whatsappNumber: process.env.TWILIO_WHATSAPP_NUMBER!, // required — your Twilio WhatsApp sender,
+  accountSid: process.env.TWILIO_ACCOUNT_SID!,      // required: ACxxxx
+  authToken: process.env.TWILIO_AUTH_TOKEN!,        // required: basic auth AND signature validation
+  whatsappNumber: process.env.TWILIO_WHATSAPP_NUMBER!, // required: your Twilio WhatsApp sender,
                                                     //   with or without the 'whatsapp:' prefix
-  port: 3000,                    // optional — start an internal node:http webhook server
+  port: 3000,                    // optional: start an internal node:http webhook server
   webhookPath: '/webhook',       // default
-  webhookUrl: 'https://bot.example.com/webhook', // strongly recommended — see the proxy caveat
-  validateSignature: true,       // default — set false ONLY in tests
+  webhookUrl: 'https://bot.example.com/webhook', // strongly recommended, see the proxy caveat
+  validateSignature: true,       // default: set false ONLY in tests
   apiBaseUrl: 'https://api.twilio.com', // default (override for tests)
   logger,                        // default consoleLogger()
 });
 ```
 
 `accountSid` and `authToken` come from the Twilio console's account dashboard. The
-`whatsapp:` prefix on `whatsappNumber` is optional — the transport normalizes it
+`whatsapp:` prefix on `whatsappNumber` is optional, the transport normalizes it
 (`'+14155238886'` and `'whatsapp:+14155238886'` are equivalent).
 
 Setting `validateSignature: false` disables webhook authentication entirely and logs a
-prominent warning on start — anyone who discovers your webhook URL could then forge
+prominent warning on start. Anyone who discovers your webhook URL could then forge
 inbound messages. It exists for tests only.
 
 ## Sandbox quickstart
@@ -50,10 +50,10 @@ sender registration:
    (e.g. `+1 415 523 8886`) and your unique **join code** (`join <two-words>`).
 2. From your phone, send that join code as a WhatsApp message to the sandbox number.
    Twilio confirms you've joined. (Sandbox connections expire after ~72 hours of
-   inactivity — just send the join code again.)
+   inactivity, just send the join code again.)
 3. Use the sandbox number as `whatsappNumber` and point the sandbox at your webhook:
    under **Messaging → Try it out → Send a WhatsApp message → Sandbox settings**, set
-   **"When a message comes in"** to your public webhook URL (method `POST`) — see the
+   **"When a message comes in"** to your public webhook URL (method `POST`), see the
    next sections for exposing one.
 4. Start your bot and message the sandbox number from the joined phone.
 
@@ -92,11 +92,11 @@ wrong signature is answered **403** and never processed.
 
 That makes validation depend on knowing the exact public URL. If `webhookUrl` is not
 set, the transport reconstructs it as `'https://' + Host header + path` and **warns
-once** — behind a proxy, load balancer, or tunnel that rewrites the `Host` header (or
+once**: behind a proxy, load balancer, or tunnel that rewrites the `Host` header (or
 terminates TLS elsewhere), the reconstruction can mismatch what Twilio actually signed
 and every request gets rejected as 403. **Set `webhookUrl` to the exact public URL**
 (scheme + host + path, e.g. your ngrok URL + `/webhook`) whenever anything sits between
-Twilio and your process — and update it when your tunnel URL changes.
+Twilio and your process, and update it when your tunnel URL changes.
 
 ## Running the webhook server
 
@@ -110,7 +110,7 @@ const bot = new Bot({ transport /* port: 3000 set above */, agent });
 await bot.start();
 ```
 
-With `port: 0` the OS picks an ephemeral port — read it from
+With `port: 0` the OS picks an ephemeral port, read it from
 `transport.httpServer.address()` (useful in tests).
 
 ### Mounting into your own server
@@ -121,10 +121,10 @@ methods on the path) and returns `true` when the request's path matched (i.e. it
 handled).
 
 `handleRequest` reads the raw request body itself **unless** you pass `rawBody`. Pass
-it whenever a framework body-parser has already consumed the stream — the signature
+it whenever a framework body-parser has already consumed the stream. The signature
 check runs over the decoded params of these exact raw bytes.
 
-**Express** — use `express.raw` with a wildcard `type` on the webhook path (Express's
+**Express**: use `express.raw` with a wildcard `type` on the webhook path (Express's
 default raw type is `application/octet-stream`; Twilio posts
 `application/x-www-form-urlencoded`, so widen it) and pass `req.body` through:
 
@@ -133,7 +133,7 @@ import express from 'express';
 
 const app = express();
 
-// Keep the body raw on the webhook path — do NOT let express.urlencoded() touch it.
+// Keep the body raw on the webhook path, do NOT let express.urlencoded() touch it.
 app.use('/webhook', express.raw({ type: '*/*' }));
 
 app.post('/webhook', async (req, res) => {
@@ -147,19 +147,19 @@ app.listen(3000);
 ```
 
 For a plain `node:http` server, just call `handleRequest(req, res)` (no `rawBody`
-needed — the transport reads the stream) and 404 anything it didn't handle.
+needed, the transport reads the stream) and 404 anything it didn't handle.
 
 ### POST handling semantics
 
 Valid webhook POSTs are acknowledged **immediately** with 200 and an empty TwiML body
-(`<Response/>`, `Content-Type: text/xml` — so Twilio sends no auto-reply) and processed
-asynchronously (Twilio retries slow webhooks). Request bodies are capped at **1 MiB** —
+(`<Response/>`, `Content-Type: text/xml`, so Twilio sends no auto-reply) and processed
+asynchronously (Twilio retries slow webhooks). Request bodies are capped at **1 MiB**,
 real Twilio webhooks are small form-encoded documents, and the buffering happens before
 authentication, so the cap stays low; an over-limit body is answered with 400 and never
 processed.
 
 Mapped messages are handed to the pipeline **without awaiting each handler**: delivery
-is non-blocking, so one chat's slow agent turn can't stall the webhook loop — per-chat
+is non-blocking, so one chat's slow agent turn can't stall the webhook loop. Per-chat
 ordering is still guaranteed by the Bot's per-chat queue (its enqueue is synchronous).
 
 Twilio redelivers webhooks it considers failed, so the transport dedups: it keeps a
@@ -173,7 +173,7 @@ debug log.
 ## Inbound mapping
 
 - `id` = `MessageSid`; `chatId` = `senderId` = `From` **verbatim** (e.g.
-  `whatsapp:+15551234567` — ids are transport-specific and round-trip into `send()`);
+  `whatsapp:+15551234567`, ids are transport-specific and round-trip into `send()`);
   `senderName` from `ProfileName`; `isGroup` is always `false`; `timestamp` is the
   arrival time (Twilio sends no epoch)
 - `Body` → `message.text` (template quick replies: `ButtonText` → `text`,
@@ -195,13 +195,13 @@ debug log.
 prefix is prepended to `To` when missing, so inbound chat ids round-trip verbatim.
 
 - **Text** → `Body`.
-- **Media** — must be a **public `http(s)` URL** → `MediaUrl` (its caption wins over
+- **Media**: must be a **public `http(s)` URL** → `MediaUrl` (its caption wins over
   `text` as `Body`). Twilio's Messages API has **no binary upload**: a Buffer or local
   file path makes `send` throw a clear `Error` telling you to host the file and pass a
   URL.
 - **Buttons** → a **numbered text fallback** appended to the text (native Twilio
-  buttons require pre-registered Content Templates — see the next section). The user
-  answers with plain text, so match on titles with `hears()` — see the
+  buttons require pre-registered Content Templates, see the next section). The user
+  answers with plain text, so match on titles with `hears()`, see the
   [buttons recipe](../recipes.md#portable-quick-reply-buttons).
 - **Location** → `PersistentAction = geo:{lat},{lon}|{name}`.
 - **`replyTo`** is skipped with a debug log (the Messages API has no quoted-reply
@@ -210,7 +210,7 @@ prefix is prepended to `To` when missing, so inbound chat ids round-trip verbati
 Any non-2xx response makes `send` throw an `Error` that includes the HTTP status and
 the response body; on success `SendResult.id` is the message `sid`.
 
-`sendTyping` and `markRead` are deliberately **absent** — Twilio does not expose typing
+`sendTyping` and `markRead` are deliberately **absent**. Twilio does not expose typing
 indicators or read receipts for WhatsApp, and the Bot feature-detects the missing
 methods (`ctx.sendTyping()` is a silent no-op).
 
@@ -218,14 +218,14 @@ methods (`ctx.sendTyping()` is a silent no-op).
 
 WhatsApp platform rules (they apply to the Cloud API too, and to the sandbox): a
 business may send **free-form** messages only within **24 hours of the user's last
-inbound message**. Outside that window, only **pre-approved templates** — on Twilio,
-**Content Templates** — may be sent, and a free-form `send` fails (Twilio error 63016,
+inbound message**. Outside that window, only **pre-approved templates** (on Twilio,
+**Content Templates**) may be sent, and a free-form `send` fails (Twilio error 63016,
 which surfaces as the thrown non-2xx `Error`).
 
-wappa v0.1 sends free-form messages only — Content Templates (which are also what
+wappa v0.1 sends free-form messages only. Content Templates (which are also what
 native quick-reply buttons require) are **out of scope**. For a reply-driven bot this
 is rarely a limitation: every user message opens a fresh 24-hour window. It matters for
-**proactive** messages (`bot.send` to a chat that hasn't written recently) — for those,
+**proactive** messages (`bot.send` to a chat that hasn't written recently). For those,
 send the template through Twilio's Content API yourself, and let the user's reply bring
 the conversation back into wappa.
 

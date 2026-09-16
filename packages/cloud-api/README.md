@@ -1,7 +1,7 @@
 # @wappajs/cloud-api
 
 Official **WhatsApp Cloud API** transport for
-[wappa](https://github.com/sifenfisaha/wappajs) — a Meta Business webhook receiver plus Graph
+[wappa](https://github.com/sifenfisaha/wappajs): a Meta Business webhook receiver plus Graph
 API sender, implemented directly against the HTTP API (no Meta SDK dependency).
 
 ```bash
@@ -31,12 +31,12 @@ await bot.start();
 ## Features
 
 - Webhook verification handshake (`hub.challenge`) handled for you
-- `X-Hub-Signature-256` request verification when `appSecret` is set —
+- `X-Hub-Signature-256` request verification when `appSecret` is set;
   `verifySignature`, `computeSignature` and `readRawBody` are exported for custom servers
 - Normalizes Cloud API payloads into wappa's message model (text, media, replies)
 - Bring your own HTTP server, or let the transport start one
 
-Meta dashboard setup — app, phone number, webhook, app secret — is walked through in
+Meta dashboard setup (app, phone number, webhook, app secret) is walked through in
 https://github.com/sifenfisaha/wappajs/blob/main/docs/transports/cloud-api.md
 
 ## License

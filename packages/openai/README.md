@@ -1,6 +1,6 @@
 # @wappajs/openai
 
-OpenAI provider for [wappa](https://github.com/sifenfisaha/wappajs) WhatsApp agents — and for
+OpenAI provider for [wappa](https://github.com/sifenfisaha/wappajs) WhatsApp agents, and for
 any **OpenAI-compatible** server (Ollama, vLLM, OpenRouter, Together, LM Studio) via
 `baseURL`.
 

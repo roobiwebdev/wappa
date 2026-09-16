@@ -3,7 +3,7 @@
 wappa is a set of npm packages (ESM-only, Node >= 20). The normal way to use it is to
 install them from npm.
 
-## Fastest path — scaffold a project
+## Fastest path: scaffold a project
 
 ```bash
 npm create wappa-agent my-bot -- --transport baileys --provider anthropic
@@ -46,7 +46,7 @@ const bot = new Bot({ transport: new BaileysTransport(), agent });
 await bot.start();
 ```
 
-The rest of this page covers working from a clone of the repo instead — useful when you
+The rest of this page covers working from a clone of the repo instead, useful when you
 want to modify the framework itself.
 
 ## Working from a clone
@@ -55,11 +55,11 @@ want to modify the framework itself.
 git clone https://github.com/sifenfisaha/wappajs.git
 cd wappa
 npm install
-npm run build          # tsc -b — builds every package's dist/
+npm run build          # tsc -b, builds every package's dist/
 npm test               # optional: vitest run, all offline
 ```
 
-### Option A — build your bot inside this workspace
+### Option A: build your bot inside this workspace
 
 The lowest-friction way to experiment: add your bot as another workspace package next to
 the examples (the root `package.json` declares workspaces `packages/*` and `examples/*`).
@@ -106,7 +106,7 @@ mkdir -p examples/my-bot/src
 }
 ```
 
-`examples/my-bot/src/index.ts` — the quickstart from the [README](../README.md):
+`examples/my-bot/src/index.ts`, the quickstart from the [README](../README.md):
 
 ```ts
 import { Agent, Bot } from '@wappajs/core';
@@ -137,7 +137,7 @@ node examples/my-bot/dist/index.js
 Scan the QR code that appears in the terminal with WhatsApp on your phone
 (Settings → Linked devices → Link a device) and message the linked number.
 
-### Option B — `npm pack` tarballs into your own project
+### Option B: `npm pack` tarballs into your own project
 
 Build once, pack the packages you need, and install the tarballs into any project:
 
@@ -161,7 +161,7 @@ Swap in `-w packages/cloud-api` / `-w packages/twilio` / `-w packages/openai` (a
 matching tarballs) for the transport + provider combination you want. Your project needs
 `"type": "module"` and Node >= 20.
 
-### Option C — publish your own fork
+### Option C: publish your own fork
 
 The packages are plain, publishable npm packages. To release them under your own scope,
 rename them in each `packages/*/package.json` (and update the matching `@wappajs/*`
@@ -169,7 +169,7 @@ dependency ranges and imports), then follow [RELEASING.md](../RELEASING.md).
 
 ## The scaffolder
 
-`create-wappa-agent` scaffolds a ready project — interactive prompts, or fully
+`create-wappa-agent` scaffolds a ready project, with interactive prompts, or fully
 non-interactive with flags:
 
 ```bash
@@ -185,13 +185,13 @@ a README; it does not run `npm install` for you.
 | --- | --- |
 | `ANTHROPIC_API_KEY` | `AnthropicProvider` (SDK default when `apiKey` not passed) |
 | `OPENAI_API_KEY` | `OpenAIProvider` (SDK default when `apiKey` not passed) |
-| `WHATSAPP_ACCESS_TOKEN`, `WHATSAPP_PHONE_NUMBER_ID`, `WHATSAPP_VERIFY_TOKEN`, `WHATSAPP_APP_SECRET` | your Cloud API bot config — see [transports/cloud-api.md](transports/cloud-api.md) |
-| `TWILIO_ACCOUNT_SID`, `TWILIO_AUTH_TOKEN`, `TWILIO_WHATSAPP_NUMBER`, `TWILIO_WEBHOOK_URL` | your Twilio bot config — see [transports/twilio.md](transports/twilio.md) |
+| `WHATSAPP_ACCESS_TOKEN`, `WHATSAPP_PHONE_NUMBER_ID`, `WHATSAPP_VERIFY_TOKEN`, `WHATSAPP_APP_SECRET` | your Cloud API bot config, see [transports/cloud-api.md](transports/cloud-api.md) |
+| `TWILIO_ACCOUNT_SID`, `TWILIO_AUTH_TOKEN`, `TWILIO_WHATSAPP_NUMBER`, `TWILIO_WEBHOOK_URL` | your Twilio bot config, see [transports/twilio.md](transports/twilio.md) |
 
 ## Where next
 
-- [Concepts](concepts.md) — how the Bot pipeline and Agent loop actually work
-- [Baileys transport](transports/baileys.md) — QR login, auth persistence, reconnects, ToS caveats
-- [Cloud API transport](transports/cloud-api.md) — full Meta dashboard walkthrough
-- [Twilio transport](transports/twilio.md) — sandbox quickstart, webhook setup, capability table
-- [Testing](testing.md) — test your bot offline before pointing it at real WhatsApp
+- [Concepts](concepts.md): how the Bot pipeline and Agent loop actually work
+- [Baileys transport](transports/baileys.md): QR login, auth persistence, reconnects, ToS caveats
+- [Cloud API transport](transports/cloud-api.md): full Meta dashboard walkthrough
+- [Twilio transport](transports/twilio.md): sandbox quickstart, webhook setup, capability table
+- [Testing](testing.md): test your bot offline before pointing it at real WhatsApp

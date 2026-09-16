@@ -1,12 +1,12 @@
 <<<import>>>
 import { OpenAIProvider } from '@wappajs/openai';
 <<<setup>>>
-// OpenAI — reads OPENAI_API_KEY from the environment (loaded from .env).
+// OpenAI: reads OPENAI_API_KEY from the environment (loaded from .env).
 // Defaults to the gpt-5 model; pass { model: '...' } to change it, or
 // { baseURL: '...' } to target any OpenAI-compatible server (Ollama, vLLM, ...).
 const provider = new OpenAIProvider();
 <<<env>>>
-# OpenAI API key — create one at https://platform.openai.com/api-keys
+# OpenAI API key. Create one at https://platform.openai.com/api-keys
 OPENAI_API_KEY=
 <<<readme>>>
 ## LLM (OpenAI)

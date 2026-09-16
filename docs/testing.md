@@ -1,8 +1,8 @@
 # Testing
 
 Testability is a feature: `@wappajs/core/testing` ships an in-memory transport and a
-scripted provider so you can unit-test a complete bot — middleware, routes, agent loop,
-tools, sessions — **offline**: no WhatsApp, no LLM key, fully deterministic.
+scripted provider so you can unit-test a complete bot (middleware, routes, agent loop,
+tools, sessions) **offline**: no WhatsApp, no LLM key, fully deterministic.
 
 ```ts
 import { MockTransport, ScriptedProvider } from '@wappajs/core/testing';
@@ -12,11 +12,11 @@ import { MockTransport, ScriptedProvider } from '@wappajs/core/testing';
 
 An in-memory `Transport` (`name: 'mock'`):
 
-- `sent` — everything sent via `send()`, in order, as
+- `sent`: everything sent via `send()`, in order, as
   `Array<{ chatId: string; payload: OutboundPayload }>` (strings are normalized to
   `{ text }` via `toPayload`). Assert on it.
 - `start()` fires `onReady({ selfId: 'mock' })` immediately.
-- `receive(partial)` — simulate an inbound message. It **returns once the pipeline
+- `receive(partial)`: simulate an inbound message. It **returns once the pipeline
   fully settles** (middleware, agent turn, session save included), so you can assert
   right after `await`ing it. You pass only what the test cares about; the defaults are
   exact and stable, so your tests can assert on them:
@@ -31,7 +31,7 @@ An in-memory `Transport` (`name: 'mock'`):
 | `fromMe`    | `false`                                          |
 
 `MockTransport` implements no `sendTyping`, so the Bot's typing indicator is a silent
-no-op in tests — `sent` contains only real messages.
+no-op in tests, so `sent` contains only real messages.
 
 ## `ScriptedProvider`
 
@@ -41,14 +41,14 @@ call, and records every request in `calls: GenerateRequest[]` for inspection:
 - A **string** entry is shorthand for `{ text: s, toolCalls: [], finishReason: 'stop' }`.
 - A **partial `GenerateResult`** is completed with
   `{ text: null, toolCalls: [], finishReason: toolCalls.length ? 'tool_calls' : 'stop' }`
-  — explicit fields win.
+  Explicit fields win.
 - A `generate()` call **past the end of the script rejects** with
-  `Error('ScriptedProvider: script exhausted (call <n> of <len>)')` — a bot stuck in a
+  `Error('ScriptedProvider: script exhausted (call <n> of <len>)')`. A bot stuck in a
   loop fails loudly instead of hanging.
 
 ## A complete example
 
-`src/bot.test.ts` — runnable with `vitest run`:
+`src/bot.test.ts`, runnable with `vitest run`:
 
 ```ts
 import { describe, expect, it } from 'vitest';
@@ -70,7 +70,7 @@ describe('order bot', () => {
     await transport.receive({ text: '/ping' });
 
     expect(transport.sent).toEqual([{ chatId: 'test-chat', payload: { text: 'pong' } }]);
-    expect(provider.calls).toHaveLength(0); // command matched — no LLM call
+    expect(provider.calls).toHaveLength(0); // command matched, no LLM call
   });
 
   it('runs a scripted tool call end to end', async () => {
@@ -124,7 +124,7 @@ describe('order bot', () => {
 
   it('applies the documented receive() defaults', async () => {
     const transport = new MockTransport();
-    const bot = new Bot({ transport }); // router-only bot — no agent needed
+    const bot = new Bot({ transport }); // router-only bot, no agent needed
     // Capture inside the handler, assert outside: the pipeline routes handler
     // errors to onError, so a failing expect() inside would be swallowed.
     let seen: InboundMessage | undefined;
@@ -156,10 +156,10 @@ describe('order bot', () => {
   test per-chat isolation, `{ isGroup: true, senderId: 'member@g.us', senderName: 'Ada' }`
   for group behavior, `{ fromMe: true }` to check the drop filter.
 - **Inject a `SessionStore` you keep a reference to** (as above) to assert on history
-  and `session.data` after a turn — or use a `FileSessionStore` on a temp dir to test
+  and `session.data` after a turn, or use a `FileSessionStore` on a temp dir to test
   persistence for real.
 - **Keep scripts minimal.** The exhaustion error means a surplus `generate()` call fails
   the test with a precise message instead of hanging or silently passing.
 - **Test tools directly, too.** `defineTool(...)` returns a `Tool` whose
-  `invoke(args, ctx)` you can call with a stub context — no bot required — and whose
+  `invoke(args, ctx)` you can call with a stub context (no bot required) and whose
   error behavior (invalid args, thrown errors) comes back as result strings.

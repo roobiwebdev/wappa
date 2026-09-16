@@ -1,11 +1,11 @@
 <<<import>>>
 import { AnthropicProvider } from '@wappajs/anthropic';
 <<<setup>>>
-// Claude — reads ANTHROPIC_API_KEY from the environment (loaded from .env).
+// Claude: reads ANTHROPIC_API_KEY from the environment (loaded from .env).
 // Defaults to the claude-sonnet-5 model; pass { model: '...' } to change it.
 const provider = new AnthropicProvider();
 <<<env>>>
-# Anthropic API key — create one at https://console.anthropic.com/
+# Anthropic API key. Create one at https://console.anthropic.com/
 ANTHROPIC_API_KEY=
 <<<readme>>>
 ## LLM (Anthropic)

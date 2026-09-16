@@ -1,6 +1,6 @@
 # @wappajs/baileys
 
-Baileys transport for [wappa](https://github.com/sifenfisaha/wappajs) — run a WhatsApp agent
+Baileys transport for [wappa](https://github.com/sifenfisaha/wappajs). Run a WhatsApp agent
 on a **personal number**, logged in by scanning a QR code. The fastest way to get an agent
 answering messages; no Meta Business account required.
 
@@ -32,7 +32,7 @@ API) or [`@wappajs/twilio`](https://www.npmjs.com/package/@wappajs/twilio).
 
 ## Options
 
-`BaileysTransportOptions` covers the auth-state directory, logger, and reconnect behavior —
+`BaileysTransportOptions` covers the auth-state directory, logger, and reconnect behavior.
 see https://github.com/sifenfisaha/wappajs/blob/main/docs/transports
 
 ## License

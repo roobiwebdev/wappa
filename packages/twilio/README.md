@@ -1,6 +1,6 @@
 # @wappajs/twilio
 
-Twilio **WhatsApp** transport for [wappa](https://github.com/sifenfisaha/wappajs) — run an
+Twilio **WhatsApp** transport for [wappa](https://github.com/sifenfisaha/wappajs). Run an
 agent on a Twilio-provisioned WhatsApp number (BSP). Implemented against Twilio's
 form-encoded webhook and Messages REST API directly, with no Twilio SDK dependency.
 

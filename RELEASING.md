@@ -13,7 +13,7 @@ release where the versions drift apart scaffolds projects that cannot install.
    ```
 
 2. Create the npm organization matching the scope in `packages/*/package.json` (currently
-   **`@wappajs`**) at https://www.npmjs.com/org/create — pick the **free** tier, which
+   **`@wappajs`**) at https://www.npmjs.com/org/create, and pick the **free** tier, which
    publishes unlimited *public* packages. Every package sets
    `publishConfig.access = "public"`, so nothing is published privately by accident.
 
@@ -29,7 +29,7 @@ release where the versions drift apart scaffolds projects that cannot install.
    `usewappa`, `wappakit`, `getwappa`, `wappaai`.
 
 3. If your account has 2FA set to "Authorization and writes" (recommended), keep your
-   authenticator handy — npm prompts for an OTP on every publish.
+   authenticator handy, npm prompts for an OTP on every publish.
 
 ## Cleaning up the abandoned unscoped release
 
@@ -44,7 +44,7 @@ npm deprecate wappa-cloud-api@0.1.0 "Moved to @wappajs/cloud-api"
 npm deprecate wappa-anthropic@0.1.0 "Moved to @wappajs/anthropic"
 ```
 
-Deprecating leaves them installable but prints the message — preferable to unpublishing,
+Deprecating leaves them installable but prints the message, which is preferable to unpublishing,
 which npm only allows within 72 hours of publishing.
 
 ## Cutting a release

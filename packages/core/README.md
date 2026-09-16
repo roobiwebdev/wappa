@@ -1,6 +1,6 @@
 # @wappajs/core
 
-Transport-agnostic core of [wappa](https://github.com/sifenfisaha/wappajs) — a TypeScript
+Transport-agnostic core of [wappa](https://github.com/sifenfisaha/wappajs), a TypeScript
 framework for building WhatsApp agents. This package never imports a WhatsApp library: it
 speaks a normalized message model, owns the LLM tool-call loop, and lets you plug in a
 transport and a provider.
@@ -32,16 +32,16 @@ await bot.start();
 
 ## What's in here
 
-- `Bot` — per-chat message queues, middleware chain (`use`, `command`, `hears`), graceful shutdown
-- `Agent` — the tool-call loop, history window, error rollback, `maxTurns` cap
-- `defineTool` — typed tools whose arguments are inferred and validated with zod
-- Sessions — per-chat conversation history and durable data (in-memory and file-backed stores)
-- `Transport` / `Provider` interfaces — the contracts adapter packages implement
+- `Bot`: per-chat message queues, middleware chain (`use`, `command`, `hears`), graceful shutdown
+- `Agent`: the tool-call loop, history window, error rollback, `maxTurns` cap
+- `defineTool`: typed tools whose arguments are inferred and validated with zod
+- Sessions: per-chat conversation history and durable data (in-memory and file-backed stores)
+- `Transport` / `Provider` interfaces: the contracts adapter packages implement
 
 ## Testing
 
 `@wappajs/core/testing` ships `MockTransport` and `ScriptedProvider`, so a whole bot can be
-unit-tested offline — no WhatsApp connection, no LLM key.
+unit-tested offline, with no WhatsApp connection and no LLM key.
 
 ```ts
 import { MockTransport, ScriptedProvider } from '@wappajs/core/testing';

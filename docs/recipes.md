@@ -1,7 +1,7 @@
 # Recipes
 
 Practical patterns built from the primitives in [concepts.md](concepts.md). Everything
-here is plain wappa — no extra framework features involved.
+here is plain wappa, with no extra framework features involved.
 
 ## Human handoff
 
@@ -21,7 +21,7 @@ const escalate = defineTool({
   description: 'Hand this conversation to a human operator when the user asks for one or you cannot help.',
   parameters: z.object({ reason: z.string() }),
   async execute({ reason }, ctx) {
-    // In-pipeline form: the Bot's own save persists it — no race with the session store.
+    // In-pipeline form: the Bot's own save persists it, no race with the session store.
     ctx.session.paused = true;
     await ctx.bot.send(
       OPERATOR_CHAT_ID,
@@ -45,7 +45,7 @@ bot.command('/resume', async (ctx) => {
 ```
 
 From outside the pipeline (an admin HTTP endpoint, a cron job), use `bot.pause(chatId)` /
-`bot.resume(chatId)` — they serialize safely with message processing (see
+`bot.resume(chatId)`. They serialize safely with message processing (see
 [pause semantics](concepts.md#pause-and-handoff)).
 
 ## Media handling
@@ -66,7 +66,7 @@ bot.use(async (ctx, next) => {
 ```
 
 `MediaRef` also carries `mimetype`, `filename` (documents), and `ptt` (true for voice
-notes). Messages that are media-only have no `text`, so they skip routing and the agent —
+notes). Messages that are media-only have no `text`, so they skip routing and the agent, and
 a middleware like the one above is the place to react; a media message **with a caption**
 does reach the agent (rendered as `[image] the caption`).
 
@@ -83,7 +83,7 @@ await bot.send(chatId, {
     kind: 'document',
     data: pdfBuffer,                    // Buffer
     mimetype: 'application/pdf',        // REQUIRED for Buffer/path uploads on Cloud API
-    // Note: Twilio accepts URL media only — Buffer/path data throws there; host the
+    // Note: Twilio accepts URL media only, Buffer/path data throws there; host the
     // file and pass its public https URL as `data` instead.
     filename: 'invoice.pdf',
   },
@@ -102,7 +102,7 @@ bot.use(async (ctx, next) => {
   const selfId = ctx.bot.selfId;
   if (isGroup && selfId) {
     const selfNumber = selfId.split(/[:@]/)[0];              // '15551234567'
-    if (!text?.includes(`@${selfNumber}`)) return;           // not mentioned — stop the chain
+    if (!text?.includes(`@${selfNumber}`)) return;           // not mentioned, stop the chain
     // Strip the mention so the agent sees a clean question:
     ctx.message.text = text.replaceAll(`@${selfNumber}`, '').trim();
   }
@@ -117,7 +117,7 @@ so this middleware is a no-op there. To ignore groups entirely, skip the middlew
 
 ## Proactive and scheduled messages
 
-`bot.send(chatId, content)` works any time after `start()` — no inbound message needed.
+`bot.send(chatId, content)` works any time after `start()`, with no inbound message needed.
 Scheduling in v0.1 is plain JavaScript:
 
 ```ts
@@ -125,7 +125,7 @@ await bot.start();
 
 const timer = setInterval(() => {
   bot.send(DIGEST_CHAT_ID, 'Daily digest: all systems nominal.').catch((err) => {
-    // Baileys rejects sends while disconnected/reconnecting — log and let the next tick retry.
+    // Baileys rejects sends while disconnected/reconnecting, log and let the next tick retry.
     console.error('digest send failed:', err);
   });
 }, 24 * 60 * 60 * 1000);
@@ -139,7 +139,7 @@ process.on('SIGINT', async () => {
 
 Two caveats: on Baileys, sends while disconnected reject (catch them, as above); on the
 Cloud API and Twilio, business-initiated messages outside the 24-hour customer service
-window must be template messages — plain proactive texts only reach users who wrote to
+window must be template messages. Plain proactive texts only reach users who wrote to
 you recently.
 
 ## Voice-note transcription middleware (sketch)
@@ -162,7 +162,7 @@ bot.use(async (ctx, next) => {
 });
 ```
 
-`transcribe` is whatever you like — a hosted speech API or a local whisper.cpp server.
+`transcribe` is whatever you like: a hosted speech API or a local whisper.cpp server.
 Register this middleware **before** anything that reads `ctx.message.text` so commands
 and `hears()` work on the transcript too.
 
@@ -175,14 +175,14 @@ import { rateLimit } from '@wappajs/core';
 
 bot.use(rateLimit({
   windowMs: 60_000,  // default
-  max: 20,           // default — messages per window per chat
-  onLimit: (ctx) => ctx.reply('You are sending messages too quickly — give me a minute.'),
+  max: 20,           // default: messages per window per chat
+  onLimit: (ctx) => ctx.reply('You are sending messages too quickly, give me a minute.'),
 }));
 ```
 
 Over-limit messages never reach later middleware, routes, or the agent (`next()` is not
 called), which is what protects your LLM bill. The counter is per `chatId` and resets
-when the window elapses. Register it early — only middleware registered before it runs
+when the window elapses. Register it early. Only middleware registered before it runs
 for dropped messages. For a global or persistent limiter, write your own middleware on
 the same pattern and keep state wherever you need it.
 
@@ -210,4 +210,4 @@ bot.hears('2', handleCash);
 ```
 
 If you only target the Cloud API, check `ctx.message.buttonId` in a middleware or
-handler instead — it round-trips the button `id` exactly.
+handler instead. It round-trips the button `id` exactly.
