@@ -1,4 +1,4 @@
-# Twilio transport (`@wappa/twilio`)
+# Twilio transport (`@wappajs/twilio`)
 
 `TwilioTransport` runs your bot through **Twilio's WhatsApp Business API**. Twilio is a
 WhatsApp **BSP** (Business Solution Provider): your WhatsApp number lives with Twilio,
@@ -9,14 +9,14 @@ Twilio Messages REST API with basic auth. No Twilio SDK — just `node:http`,
 Like the Cloud API, this is an **official, ToS-safe** path: no ban risk, fine for
 production. Choose it when you already live in the Twilio ecosystem (SMS, Voice,
 Studio) or want Twilio to own the Meta relationship; choose
-[`@wappa/cloud-api`](cloud-api.md) to talk to Meta directly. Twilio WhatsApp is
+[`@wappajs/cloud-api`](cloud-api.md) to talk to Meta directly. Twilio WhatsApp is
 **DM-only** — every mapped message has `isGroup: false` and `chatId === senderId` (the
 sender address verbatim, e.g. `whatsapp:+15551234567`).
 
 ## Options
 
 ```ts
-import { TwilioTransport } from '@wappa/twilio';
+import { TwilioTransport } from '@wappajs/twilio';
 
 const transport = new TwilioTransport({
   accountSid: process.env.TWILIO_ACCOUNT_SID!,      // required — ACxxxx
@@ -231,7 +231,7 @@ the conversation back into wappa.
 
 ## Capabilities vs the other transports
 
-| Capability | [`@wappa/baileys`](baileys.md) | [`@wappa/cloud-api`](cloud-api.md) | `@wappa/twilio` |
+| Capability | [`@wappajs/baileys`](baileys.md) | [`@wappajs/cloud-api`](cloud-api.md) | `@wappajs/twilio` |
 | --- | --- | --- | --- |
 | Official / ToS-safe | no (ban risk) | **yes** | **yes** |
 | Groups | yes | no (DM-only) | no (DM-only) |

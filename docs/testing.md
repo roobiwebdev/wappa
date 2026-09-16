@@ -1,11 +1,11 @@
 # Testing
 
-Testability is a feature: `@wappa/core/testing` ships an in-memory transport and a
+Testability is a feature: `@wappajs/core/testing` ships an in-memory transport and a
 scripted provider so you can unit-test a complete bot — middleware, routes, agent loop,
 tools, sessions — **offline**: no WhatsApp, no LLM key, fully deterministic.
 
 ```ts
-import { MockTransport, ScriptedProvider } from '@wappa/core/testing';
+import { MockTransport, ScriptedProvider } from '@wappajs/core/testing';
 ```
 
 ## `MockTransport`
@@ -53,8 +53,8 @@ call, and records every request in `calls: GenerateRequest[]` for inspection:
 ```ts
 import { describe, expect, it } from 'vitest';
 import { z } from 'zod';
-import { Agent, Bot, MemorySessionStore, defineTool, type InboundMessage } from '@wappa/core';
-import { MockTransport, ScriptedProvider } from '@wappa/core/testing';
+import { Agent, Bot, MemorySessionStore, defineTool, type InboundMessage } from '@wappajs/core';
+import { MockTransport, ScriptedProvider } from '@wappajs/core/testing';
 
 describe('order bot', () => {
   it('routes /ping without touching the agent', async () => {

@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import type { Anthropic } from '@anthropic-ai/sdk';
-import type { ChatMessage, Logger, ToolSpec } from '@wappa/core';
+import type { ChatMessage, Logger, ToolSpec } from '@wappajs/core';
 import { AnthropicProvider, type AnthropicClientLike } from './provider.js';
 
 /** Logger that records every call for assertions. */

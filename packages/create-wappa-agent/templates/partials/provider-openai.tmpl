@@ -1,5 +1,5 @@
 <<<import>>>
-import { OpenAIProvider } from '@wappa/openai';
+import { OpenAIProvider } from '@wappajs/openai';
 <<<setup>>>
 // OpenAI — reads OPENAI_API_KEY from the environment (loaded from .env).
 // Defaults to the gpt-5 model; pass { model: '...' } to change it, or
@@ -11,7 +11,7 @@ OPENAI_API_KEY=
 <<<readme>>>
 ## LLM (OpenAI)
 
-The agent thinks with OpenAI via `@wappa/openai`. Set `OPENAI_API_KEY` in `.env`
+The agent thinks with OpenAI via `@wappajs/openai`. Set `OPENAI_API_KEY` in `.env`
 (create a key at <https://platform.openai.com/api-keys>). To change models,
 pass `new OpenAIProvider({ model: '...' })`; pass `baseURL` to use any
 OpenAI-compatible server (Ollama, vLLM, llama.cpp, ...).

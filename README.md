@@ -7,11 +7,11 @@ login, the official WhatsApp Cloud API, or Twilio's WhatsApp API), and run.
 
 ## Features
 
-- **Transport-agnostic core.** `@wappa/core` never imports a WhatsApp library; it speaks a
+- **Transport-agnostic core.** `@wappajs/core` never imports a WhatsApp library; it speaks a
   normalized message model. Adapters translate.
 - **Provider-agnostic agent loop.** The core owns the tool-call loop and conversation
-  memory. Providers (`@wappa/anthropic`, `@wappa/openai`) map one `generate()` call to
-  their SDK — and `@wappa/openai` works against any OpenAI-compatible server via `baseURL`.
+  memory. Providers (`@wappajs/anthropic`, `@wappajs/openai`) map one `generate()` call to
+  their SDK — and `@wappajs/openai` works against any OpenAI-compatible server via `baseURL`.
 - **Middleware-first extensibility.** grammY/Telegraf-style `use(ctx, next)`, plus
   `command()` and `hears()` routing. Auth, rate limiting, logging, transcription and
   handoff are all just middleware.
@@ -20,7 +20,7 @@ login, the official WhatsApp Cloud API, or Twilio's WhatsApp API), and run.
   instead of crashes.
 - **Sessions built in.** Per-chat conversation history and durable data with in-memory
   and file-backed stores, and a lost-update-safe pause/resume flag for human handoff.
-- **Testability is a feature.** `@wappa/core/testing` ships `MockTransport` and
+- **Testability is a feature.** `@wappajs/core/testing` ships `MockTransport` and
   `ScriptedProvider`, so you can unit-test a whole bot offline — no WhatsApp, no LLM key.
 - **Per-chat concurrency model.** Messages within one chat are processed strictly in
   order; different chats run concurrently. Graceful shutdown drains in-flight turns.
@@ -31,9 +31,9 @@ login, the official WhatsApp Cloud API, or Twilio's WhatsApp API), and run.
                  WhatsApp
                      │
       ┌──────────────┴───────────────┐
-      │           Transport          │   @wappa/baileys    (personal number, QR login)
-      │  QR / webhooks / Graph API   │   @wappa/cloud-api  (official Meta Cloud API)
-      │                              │   @wappa/twilio     (Twilio WhatsApp BSP)
+      │           Transport          │   @wappajs/baileys    (personal number, QR login)
+      │  QR / webhooks / Graph API   │   @wappajs/cloud-api  (official Meta Cloud API)
+      │                              │   @wappajs/twilio     (Twilio WhatsApp BSP)
       └──────────────┬───────────────┘
                      │  InboundMessage / OutboundPayload (normalized)
       ┌──────────────┴───────────────┐
@@ -47,22 +47,30 @@ login, the official WhatsApp Cloud API, or Twilio's WhatsApp API), and run.
       └──────────────┬───────────────┘
                      │  GenerateRequest / GenerateResult
       ┌──────────────┴───────────────┐
-      │           Provider           │   @wappa/anthropic  (Claude)
-      │        one generate()        │   @wappa/openai     (GPT + compatible servers)
+      │           Provider           │   @wappajs/anthropic  (Claude)
+      │        one generate()        │   @wappajs/openai     (GPT + compatible servers)
       └──────────────────────────────┘
 ```
 
 ## Quickstart: Baileys + Claude
 
 The fastest path to a running agent — a personal WhatsApp number, logged in via QR code.
-(The packages live in this monorepo; see [docs/getting-started.md](docs/getting-started.md)
-for how to consume them from the workspace, via `npm pack`, or under your own npm scope.)
+
+```bash
+npm create wappa-agent my-bot -- --transport baileys --provider anthropic
+```
+
+Or wire it up by hand in an existing ESM project (Node >= 20):
+
+```bash
+npm install @wappajs/core @wappajs/baileys @wappajs/anthropic zod
+```
 
 ```ts
 // src/index.ts  (ESM, Node >= 20)
-import { Agent, Bot, defineTool } from '@wappa/core';
-import { BaileysTransport } from '@wappa/baileys';
-import { AnthropicProvider } from '@wappa/anthropic';
+import { Agent, Bot, defineTool } from '@wappajs/core';
+import { BaileysTransport } from '@wappajs/baileys';
+import { AnthropicProvider } from '@wappajs/anthropic';
 import { z } from 'zod';
 
 const agent = new Agent({
@@ -95,9 +103,9 @@ Auth state persists in `./wappa-auth`, so the QR scan is only needed once.
 The official transport runs a webhook server and sends through the Graph API:
 
 ```ts
-import { Agent, Bot } from '@wappa/core';
-import { CloudApiTransport } from '@wappa/cloud-api';
-import { OpenAIProvider } from '@wappa/openai';
+import { Agent, Bot } from '@wappajs/core';
+import { CloudApiTransport } from '@wappajs/cloud-api';
+import { OpenAIProvider } from '@wappajs/openai';
 
 const transport = new CloudApiTransport({
   accessToken: process.env.WHATSAPP_ACCESS_TOKEN!,
@@ -125,13 +133,13 @@ through step by step in [docs/transports/cloud-api.md](docs/transports/cloud-api
 
 | Package             | What it is                                                                          |
 | ------------------- | ----------------------------------------------------------------------------------- |
-| `@wappa/core`        | Transport-agnostic core: `Bot`, `Agent`, `defineTool`, sessions, middleware, logger |
-| `@wappa/core/testing`| `MockTransport` + `ScriptedProvider` for offline tests                              |
-| `@wappa/baileys`     | Baileys transport — personal number via QR login (unofficial client, see below)     |
-| `@wappa/cloud-api`   | Official WhatsApp Cloud API transport (Meta webhook + Graph API, no Meta SDK)       |
-| `@wappa/twilio`      | Twilio WhatsApp transport (form-encoded webhook + Messages REST API, no Twilio SDK) |
-| `@wappa/anthropic`   | Claude provider (Anthropic Messages API), default model `claude-sonnet-5`           |
-| `@wappa/openai`      | OpenAI provider (Chat Completions), default model `gpt-5`; `baseURL` for Ollama etc.|
+| `@wappajs/core`        | Transport-agnostic core: `Bot`, `Agent`, `defineTool`, sessions, middleware, logger |
+| `@wappajs/core/testing`| `MockTransport` + `ScriptedProvider` for offline tests                              |
+| `@wappajs/baileys`     | Baileys transport — personal number via QR login (unofficial client, see below)     |
+| `@wappajs/cloud-api`   | Official WhatsApp Cloud API transport (Meta webhook + Graph API, no Meta SDK)       |
+| `@wappajs/twilio`      | Twilio WhatsApp transport (form-encoded webhook + Messages REST API, no Twilio SDK) |
+| `@wappajs/anthropic`   | Claude provider (Anthropic Messages API), default model `claude-sonnet-5`           |
+| `@wappajs/openai`      | OpenAI provider (Chat Completions), default model `gpt-5`; `baseURL` for Ollama etc.|
 | `create-wappa-agent` | Project scaffolder: `npm create wappa-agent my-bot`                                  |
 
 ## Documentation
@@ -164,10 +172,10 @@ Deliberately **not** in v0.1 (several have recipes showing how to do them yourse
 
 ## A note on Baileys and WhatsApp's Terms of Service
 
-`@wappa/baileys` builds on [Baileys](https://github.com/WhiskeySockets/Baileys), an
+`@wappajs/baileys` builds on [Baileys](https://github.com/WhiskeySockets/Baileys), an
 **unofficial** WhatsApp Web client. Using it may violate WhatsApp's Terms of Service and
 **can get phone numbers banned**. Use a number you can afford to lose, and prefer an
-official transport (`@wappa/cloud-api` or `@wappa/twilio`) for anything production-grade.
+official transport (`@wappajs/cloud-api` or `@wappajs/twilio`) for anything production-grade.
 
 ## License
 

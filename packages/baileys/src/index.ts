@@ -1,5 +1,5 @@
 /**
- * @wappa/baileys — Baileys transport adapter for wappa.
+ * @wappajs/baileys — Baileys transport adapter for wappa.
  *
  * Run a WhatsApp agent on a personal number via QR login. Baileys is an
  * unofficial client: using it may violate WhatsApp's ToS and can get numbers

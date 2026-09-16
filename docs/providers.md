@@ -4,10 +4,10 @@ A provider is the LLM half of the contract: the core owns the tool-call loop and
 conversation memory, and a provider maps **one** `generate()` call to its SDK. Two ship
 with wappa; writing your own is a single method.
 
-## `@wappa/anthropic` — Claude
+## `@wappajs/anthropic` — Claude
 
 ```ts
-import { AnthropicProvider } from '@wappa/anthropic';
+import { AnthropicProvider } from '@wappajs/anthropic';
 
 const provider = new AnthropicProvider({
   apiKey: '...',              // default: ANTHROPIC_API_KEY env var (SDK default)
@@ -45,13 +45,13 @@ Mapping notes (all handled for you):
   `max_tokens` → `length`, anything else → `other`. Token usage is reported on
   `GenerateResult.usage`.
 
-## `@wappa/openai` — GPT and OpenAI-compatible servers
+## `@wappajs/openai` — GPT and OpenAI-compatible servers
 
 Built on the **Chat Completions** API for maximum compatibility, including local
 OpenAI-compatible servers.
 
 ```ts
-import { OpenAIProvider } from '@wappa/openai';
+import { OpenAIProvider } from '@wappajs/openai';
 
 const provider = new OpenAIProvider({
   apiKey: '...',        // default: OPENAI_API_KEY env var (SDK default)
@@ -108,7 +108,7 @@ Pick a model that supports tool calling if your agent has tools.
 
 ## Writing a custom provider
 
-Implement the `Provider` interface from `@wappa/core` — one readonly name and one method:
+Implement the `Provider` interface from `@wappajs/core` — one readonly name and one method:
 
 ```ts
 import type {
@@ -118,7 +118,7 @@ import type {
   Provider,
   ToolCall,         // { id, name, arguments: Record<string, unknown> }
   ToolSpec,         // { name, description, parameters: JsonSchema }
-} from '@wappa/core';
+} from '@wappajs/core';
 
 export class MyProvider implements Provider {
   readonly name = 'my-provider';

@@ -13,7 +13,7 @@ import {
   type SendResult,
   type Transport,
   type TransportHandlers,
-} from '@wappa/core';
+} from '@wappajs/core';
 import { buildSendBody, isHttpUrl, mapWebhookPayload } from './mapping.js';
 import { readRawBody, verifySignature } from './webhook.js';
 

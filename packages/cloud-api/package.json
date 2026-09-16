@@ -1,15 +1,47 @@
 {
-  "name": "@wappa/cloud-api",
-  "version": "0.1.0",
+  "name": "@wappajs/cloud-api",
+  "version": "0.1.1",
   "description": "Official WhatsApp Cloud API transport adapter for wappa (Meta Business webhook + Graph API).",
   "type": "module",
   "license": "MIT",
-  "engines": { "node": ">=20" },
+  "author": "Sifen Fisaha",
+  "homepage": "https://github.com/sifenfisaha/wappa#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sifenfisaha/wappa.git",
+    "directory": "packages/cloud-api"
+  },
+  "bugs": {
+    "url": "https://github.com/sifenfisaha/wappa/issues"
+  },
+  "engines": {
+    "node": ">=20"
+  },
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
-  "exports": { ".": { "types": "./dist/index.d.ts", "default": "./dist/index.js" } },
-  "files": ["dist"],
-  "scripts": { "build": "tsc -b", "test": "vitest run" },
-  "dependencies": { "@wappa/core": "^0.1.0" },
-  "keywords": ["whatsapp", "cloud-api", "wappa", "transport"]
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "tsc -b",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@wappajs/core": "^0.1.1"
+  },
+  "keywords": [
+    "whatsapp",
+    "cloud-api",
+    "wappa",
+    "transport"
+  ]
 }

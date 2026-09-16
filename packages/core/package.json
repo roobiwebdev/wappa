@@ -1,18 +1,52 @@
 {
-  "name": "@wappa/core",
-  "version": "0.1.0",
+  "name": "@wappajs/core",
+  "version": "0.1.1",
   "description": "Transport-agnostic core for building WhatsApp agents: agent loop, tools, middleware, sessions.",
   "type": "module",
   "license": "MIT",
-  "engines": { "node": ">=20" },
+  "author": "Sifen Fisaha",
+  "homepage": "https://github.com/sifenfisaha/wappa#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sifenfisaha/wappa.git",
+    "directory": "packages/core"
+  },
+  "bugs": {
+    "url": "https://github.com/sifenfisaha/wappa/issues"
+  },
+  "engines": {
+    "node": ">=20"
+  },
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
-    ".": { "types": "./dist/index.d.ts", "default": "./dist/index.js" },
-    "./testing": { "types": "./dist/testing.d.ts", "default": "./dist/testing.js" }
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./testing": {
+      "types": "./dist/testing.d.ts",
+      "default": "./dist/testing.js"
+    }
   },
-  "files": ["dist"],
-  "scripts": { "build": "tsc -b", "test": "vitest run" },
-  "dependencies": { "zod": "^4.5.4" },
-  "keywords": ["whatsapp", "agent", "bot", "llm", "framework"]
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "tsc -b",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "zod": "^4.5.4"
+  },
+  "keywords": [
+    "whatsapp",
+    "agent",
+    "bot",
+    "llm",
+    "framework"
+  ]
 }

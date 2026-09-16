@@ -11,7 +11,7 @@ import type {
   MediaRef,
   OutboundPayload,
   QuotedRef,
-} from '@wappa/core';
+} from '@wappajs/core';
 
 /** Subset of a Cloud API media object (image/audio/video/document/sticker). */
 export interface CloudApiMediaObject {

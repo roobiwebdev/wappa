@@ -1,5 +1,5 @@
 /**
- * @wappa/cloud-api — official WhatsApp Cloud API transport for wappa.
+ * @wappajs/cloud-api — official WhatsApp Cloud API transport for wappa.
  *
  * Meta Business webhook (inbound) + Graph API (outbound), built on node:http,
  * node:crypto and the global fetch — no Meta SDK.

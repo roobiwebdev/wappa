@@ -27,17 +27,17 @@ interface ChoiceMeta {
 
 const TRANSPORT_META: Record<TransportChoice, ChoiceMeta> = {
   baileys: {
-    dep: '@wappa/baileys',
+    dep: '@wappajs/baileys',
     label: 'Baileys (personal number, QR login)',
     partial: 'transport-baileys.tmpl',
   },
   'cloud-api': {
-    dep: '@wappa/cloud-api',
+    dep: '@wappajs/cloud-api',
     label: 'WhatsApp Cloud API (official)',
     partial: 'transport-cloud-api.tmpl',
   },
   twilio: {
-    dep: '@wappa/twilio',
+    dep: '@wappajs/twilio',
     label: 'Twilio WhatsApp (BSP)',
     partial: 'transport-twilio.tmpl',
   },
@@ -45,12 +45,12 @@ const TRANSPORT_META: Record<TransportChoice, ChoiceMeta> = {
 
 const PROVIDER_META: Record<ProviderChoice, ChoiceMeta> = {
   anthropic: {
-    dep: '@wappa/anthropic',
+    dep: '@wappajs/anthropic',
     label: 'Anthropic (Claude)',
     partial: 'provider-anthropic.tmpl',
   },
   openai: {
-    dep: '@wappa/openai',
+    dep: '@wappajs/openai',
     label: 'OpenAI',
     partial: 'provider-openai.tmpl',
   },

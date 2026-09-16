@@ -9,7 +9,7 @@ import {
   type GenerateResult,
   type Logger,
   type Provider,
-} from '@wappa/core';
+} from '@wappajs/core';
 import {
   degradeToolHistory,
   fromAnthropicResponse,
@@ -125,7 +125,7 @@ export class AnthropicProvider implements Provider {
         if (!this.warnedTemperature) {
           this.warnedTemperature = true;
           this.logger.warn(
-            `@wappa/anthropic: model ${this.model} does not support temperature; ignoring`,
+            `@wappajs/anthropic: model ${this.model} does not support temperature; ignoring`,
           );
         }
       } else {

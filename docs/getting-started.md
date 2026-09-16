@@ -1,18 +1,65 @@
 # Getting started
 
-wappa is a set of npm packages developed in this monorepo (npm workspaces, ESM-only,
-Node >= 20). Until the packages are published to a registry you can consume them in
-three ways; all three start the same way:
+wappa is a set of npm packages (ESM-only, Node >= 20). The normal way to use it is to
+install them from npm.
+
+## Fastest path — scaffold a project
 
 ```bash
-git clone <this-repo> wappa
+npm create wappa-agent my-bot -- --transport baileys --provider anthropic
+cd my-bot
+npm install
+cp .env.example .env   # add your API keys
+npm run build
+npm start
+```
+
+## Install into an existing project
+
+Pick one transport and one provider; `@wappajs/core` is always required. Your project needs
+`"type": "module"` in its `package.json` and Node >= 20.
+
+```bash
+npm install @wappajs/core @wappajs/baileys @wappajs/anthropic zod
+```
+
+| You want | Install |
+| --- | --- |
+| Personal number, QR login | `@wappajs/baileys` |
+| Official Meta Cloud API | `@wappajs/cloud-api` |
+| Twilio WhatsApp (BSP) | `@wappajs/twilio` |
+| Claude | `@wappajs/anthropic` |
+| GPT / any OpenAI-compatible server | `@wappajs/openai` |
+
+```ts
+// src/index.ts
+import { Agent, Bot } from '@wappajs/core';
+import { BaileysTransport } from '@wappajs/baileys';
+import { AnthropicProvider } from '@wappajs/anthropic';
+
+const agent = new Agent({
+  instructions: 'You are a helpful assistant reachable over WhatsApp. Keep replies short.',
+  provider: new AnthropicProvider(), // reads ANTHROPIC_API_KEY
+});
+
+const bot = new Bot({ transport: new BaileysTransport(), agent });
+await bot.start();
+```
+
+The rest of this page covers working from a clone of the repo instead — useful when you
+want to modify the framework itself.
+
+## Working from a clone
+
+```bash
+git clone https://github.com/sifenfisaha/wappa.git
 cd wappa
 npm install
 npm run build          # tsc -b — builds every package's dist/
 npm test               # optional: vitest run, all offline
 ```
 
-## Option A — build your bot inside this workspace
+### Option A — build your bot inside this workspace
 
 The lowest-friction way to experiment: add your bot as another workspace package next to
 the examples (the root `package.json` declares workspaces `packages/*` and `examples/*`).
@@ -36,9 +83,9 @@ mkdir -p examples/my-bot/src
     "dev": "node --watch dist/index.js"
   },
   "dependencies": {
-    "@wappa/core": "^0.1.0",
-    "@wappa/baileys": "^0.1.0",
-    "@wappa/anthropic": "^0.1.0",
+    "@wappajs/core": "^0.1.0",
+    "@wappajs/baileys": "^0.1.0",
+    "@wappajs/anthropic": "^0.1.0",
     "zod": "^4.5.4"
   }
 }
@@ -62,9 +109,9 @@ mkdir -p examples/my-bot/src
 `examples/my-bot/src/index.ts` — the quickstart from the [README](../README.md):
 
 ```ts
-import { Agent, Bot } from '@wappa/core';
-import { BaileysTransport } from '@wappa/baileys';
-import { AnthropicProvider } from '@wappa/anthropic';
+import { Agent, Bot } from '@wappajs/core';
+import { BaileysTransport } from '@wappajs/baileys';
+import { AnthropicProvider } from '@wappajs/anthropic';
 
 const agent = new Agent({
   instructions: 'You are a helpful assistant reachable over WhatsApp. Keep replies short.',
@@ -90,7 +137,7 @@ node examples/my-bot/dist/index.js
 Scan the QR code that appears in the terminal with WhatsApp on your phone
 (Settings → Linked devices → Link a device) and message the linked number.
 
-## Option B — `npm pack` tarballs into your own project
+### Option B — `npm pack` tarballs into your own project
 
 Build once, pack the packages you need, and install the tarballs into any project:
 
@@ -102,7 +149,7 @@ npm pack -w packages/core -w packages/baileys -w packages/anthropic --pack-desti
 
 This produces `wappa-core-0.1.0.tgz`, `wappa-baileys-0.1.0.tgz` and
 `wappa-anthropic-0.1.0.tgz` one directory up. In your project, install them **in one
-command** so npm resolves the `@wappa/core@^0.1.0` dependency of the adapters against the
+command** so npm resolves the `@wappajs/core@^0.1.0` dependency of the adapters against the
 local core tarball instead of the registry:
 
 ```bash
@@ -114,33 +161,16 @@ Swap in `-w packages/cloud-api` / `-w packages/twilio` / `-w packages/openai` (a
 matching tarballs) for the transport + provider combination you want. Your project needs
 `"type": "module"` and Node >= 20.
 
-## Option C — publish under your own npm scope
+### Option C — publish your own fork
 
-The packages are plain, publishable npm packages (`files: ["dist"]`, `exports` maps,
-version `0.1.0`). To own them on the registry, rename them to your scope:
-
-1. In each `packages/*/package.json`, change the name — e.g. `@wappa/core` →
-   `@yourscope/wappa-core` — and update every `"@wappa/core": "^0.1.0"` dependency
-   reference to the new name.
-2. Update your imports accordingly (`from '@yourscope/wappa-core'`).
-3. Build and publish, **core first** (the adapters depend on it):
-
-```bash
-npm run build
-npm publish -w packages/core --access public
-npm publish -w packages/baileys --access public
-npm publish -w packages/cloud-api --access public
-npm publish -w packages/twilio --access public
-npm publish -w packages/anthropic --access public
-npm publish -w packages/openai --access public
-```
-
-After that, `npm install @yourscope/wappa-core @yourscope/wappa-baileys ...` works anywhere.
+The packages are plain, publishable npm packages. To release them under your own scope,
+rename them in each `packages/*/package.json` (and update the matching `@wappajs/*`
+dependency ranges and imports), then follow [RELEASING.md](../RELEASING.md).
 
 ## The scaffolder
 
-Once the packages are available from a registry, `create-wappa-agent` scaffolds a ready
-project — interactive prompts, or fully non-interactive with flags:
+`create-wappa-agent` scaffolds a ready project — interactive prompts, or fully
+non-interactive with flags:
 
 ```bash
 npm create wappa-agent my-bot -- --transport baileys --provider anthropic --yes

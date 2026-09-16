@@ -12,7 +12,7 @@ import type {
   OutboundButton,
   OutboundPayload,
   QuotedRef,
-} from '@wappa/core';
+} from '@wappajs/core';
 import type { AnyMessageContent, WAMediaUpload, WAMessage, proto } from 'baileys';
 
 /** Downloads the media of a Baileys message as a Buffer. Injected by the transport. */

@@ -12,7 +12,7 @@ import type {
   MediaRef,
   OutboundButton,
   OutboundPayload,
-} from '@wappa/core';
+} from '@wappajs/core';
 
 /** Decoded Twilio webhook POST parameters — the full param bag. */
 export type TwilioParams = Record<string, string>;

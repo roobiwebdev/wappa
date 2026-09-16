@@ -10,9 +10,9 @@
  *
  * Env (see .env.example): ANTHROPIC_API_KEY, OPERATOR_CHAT_ID.
  */
-import { Agent, Bot, FileSessionStore, consoleLogger, defineTool, rateLimit } from '@wappa/core';
-import { AnthropicProvider } from '@wappa/anthropic';
-import { BaileysTransport } from '@wappa/baileys';
+import { Agent, Bot, FileSessionStore, consoleLogger, defineTool, rateLimit } from '@wappajs/core';
+import { AnthropicProvider } from '@wappajs/anthropic';
+import { BaileysTransport } from '@wappajs/baileys';
 import { z } from 'zod';
 import { buildEscalationNotice, isOperator } from './operator.js';
 

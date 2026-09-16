@@ -1,4 +1,4 @@
-# Baileys transport (`@wappa/baileys`)
+# Baileys transport (`@wappajs/baileys`)
 
 `BaileysTransport` runs your bot on a **personal WhatsApp number** through
 [Baileys](https://github.com/WhiskeySockets/Baileys), an unofficial WhatsApp Web client.
@@ -7,13 +7,13 @@ You log in by scanning a QR code, exactly like linking a browser session.
 > **Legal / ToS warning.** Baileys is an unofficial client: using it may violate
 > WhatsApp's Terms of Service and **can get phone numbers banned**. Use a number you can
 > afford to lose, and prefer the official Cloud API transport
-> ([`@wappa/cloud-api`](cloud-api.md)) for production.
+> ([`@wappajs/cloud-api`](cloud-api.md)) for production.
 
 ## Usage
 
 ```ts
-import { Bot } from '@wappa/core';
-import { BaileysTransport } from '@wappa/baileys';
+import { Bot } from '@wappajs/core';
+import { BaileysTransport } from '@wappajs/baileys';
 
 const transport = new BaileysTransport({
   authDir: './wappa-auth',   // default — directory for multi-file auth state

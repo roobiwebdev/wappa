@@ -9,7 +9,7 @@ import type {
   Logger,
   ToolCall,
   ToolSpec,
-} from '@wappa/core';
+} from '@wappajs/core';
 import type {
   ChatCompletion,
   ChatCompletionFunctionTool,
@@ -103,7 +103,7 @@ export function fromOpenAIResponse(resp: ChatCompletion, logger?: Logger): Gener
 
   const choice = resp.choices[0];
   if (!choice) {
-    logger?.warn('@wappa/openai: response contained no choices');
+    logger?.warn('@wappajs/openai: response contained no choices');
     return { text: null, toolCalls: [], finishReason: 'other', ...(usage ? { usage } : {}) };
   }
 
@@ -114,7 +114,7 @@ export function fromOpenAIResponse(resp: ChatCompletion, logger?: Logger): Gener
   for (const tc of choice.message.tool_calls ?? []) {
     if (tc.type !== 'function') {
       // Custom (non-function) tool calls can't map to wappa tools; skip them.
-      logger?.debug('@wappa/openai: skipping non-function tool call', { type: tc.type });
+      logger?.debug('@wappajs/openai: skipping non-function tool call', { type: tc.type });
       continue;
     }
     toolCalls.push({
@@ -163,7 +163,7 @@ function parseToolArguments(
   try {
     parsed = JSON.parse(raw);
   } catch (err) {
-    logger?.warn('@wappa/openai: tool call arguments are not valid JSON; using {}', {
+    logger?.warn('@wappajs/openai: tool call arguments are not valid JSON; using {}', {
       tool: toolName,
       arguments: raw,
       error: err instanceof Error ? err.message : String(err),
@@ -171,7 +171,7 @@ function parseToolArguments(
     return {};
   }
   if (parsed === null || typeof parsed !== 'object' || Array.isArray(parsed)) {
-    logger?.warn('@wappa/openai: tool call arguments are not a JSON object; using {}', {
+    logger?.warn('@wappajs/openai: tool call arguments are not a JSON object; using {}', {
       tool: toolName,
       arguments: raw,
     });

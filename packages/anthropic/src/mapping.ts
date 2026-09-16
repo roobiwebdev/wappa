@@ -3,7 +3,7 @@
  * Messages API. No I/O — these functions are unit-tested against fixtures.
  */
 import type { Anthropic } from '@anthropic-ai/sdk';
-import type { ChatMessage, GenerateResult, ToolCall, ToolSpec } from '@wappa/core';
+import type { ChatMessage, GenerateResult, ToolCall, ToolSpec } from '@wappajs/core';
 
 /** The `system` + `messages` slice of an Anthropic `messages.create` request. */
 export interface AnthropicMessagesParams {

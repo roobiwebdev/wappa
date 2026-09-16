@@ -1,19 +1,27 @@
 {
   "name": "wappa-monorepo",
   "private": true,
-  "version": "0.1.0",
+  "version": "0.1.1",
   "type": "module",
   "description": "wappa — a TypeScript framework for building WhatsApp agents",
-  "workspaces": ["packages/*", "examples/*"],
+  "workspaces": [
+    "packages/*",
+    "examples/*"
+  ],
   "scripts": {
     "build": "tsc -b",
     "clean": "tsc -b --clean",
-    "test": "vitest run"
+    "test": "vitest run",
+    "release": "node scripts/release.mjs",
+    "release:dry": "node scripts/release.mjs --dry-run",
+    "version:set": "node scripts/version.mjs"
   },
   "devDependencies": {
     "@types/node": "^24.0.0",
     "typescript": "~5.9.0",
     "vitest": "^5.0.0"
   },
-  "engines": { "node": ">=20" }
+  "engines": {
+    "node": ">=20"
+  }
 }

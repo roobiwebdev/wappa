@@ -1,6 +1,6 @@
 # Concepts
 
-How the pieces of `@wappa/core` fit together: the `Bot` pipeline, the `Agent` loop,
+How the pieces of `@wappajs/core` fit together: the `Bot` pipeline, the `Agent` loop,
 tools, sessions, middleware, and pause/handoff.
 
 ## Bot
@@ -151,7 +151,7 @@ Two stores ship with core, both implementing the three-method `SessionStore` int
   never permanently brick a chat — the next save overwrites it.
 
 ```ts
-import { FileSessionStore } from '@wappa/core';
+import { FileSessionStore } from '@wappajs/core';
 const bot = new Bot({ transport, agent, sessions: new FileSessionStore('.wappa-sessions') });
 ```
 
@@ -172,7 +172,7 @@ bot.use(async (ctx, next) => {
 Core ships one middleware factory, `rateLimit` — a fixed-window counter per chat:
 
 ```ts
-import { rateLimit } from '@wappa/core';
+import { rateLimit } from '@wappajs/core';
 
 bot.use(rateLimit({
   windowMs: 60_000, // default
@@ -190,7 +190,7 @@ Over-limit messages are dropped: `onLimit` is called (awaited; errors go to
 schema, argument types are inferred end-to-end:
 
 ```ts
-import { defineTool } from '@wappa/core';
+import { defineTool } from '@wappajs/core';
 import { z } from 'zod';
 
 const checkOrder = defineTool({

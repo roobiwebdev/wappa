@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import type { Anthropic } from '@anthropic-ai/sdk';
-import type { ChatMessage } from '@wappa/core';
+import type { ChatMessage } from '@wappajs/core';
 import {
   degradeToolHistory,
   fromAnthropicResponse,

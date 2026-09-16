@@ -1,11 +1,11 @@
 <<<import>>>
-import { BaileysTransport } from '@wappa/baileys';
+import { BaileysTransport } from '@wappajs/baileys';
 <<<setup>>>
 // Baileys — personal-number login. Scan the QR code printed on first start;
 // auth state is saved under ./wappa-auth so restarts reconnect silently.
 // WARNING: Baileys is an unofficial client. Using it may violate WhatsApp's
 // Terms of Service and can get numbers banned — use a number you can afford
-// to lose, and prefer @wappa/cloud-api for production.
+// to lose, and prefer @wappajs/cloud-api for production.
 const transport = new BaileysTransport({ authDir: './wappa-auth' });
 <<<env>>>
 # Baileys needs no credentials here — you log in by scanning a QR code on

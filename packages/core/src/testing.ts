@@ -1,5 +1,5 @@
 /**
- * Testing utilities, exported as `@wappa/core/testing`: unit-test bots without WhatsApp
+ * Testing utilities, exported as `@wappajs/core/testing`: unit-test bots without WhatsApp
  * or an LLM key.
  */
 import type {

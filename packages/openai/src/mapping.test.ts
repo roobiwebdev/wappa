@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import type { ChatMessage, Logger } from '@wappa/core';
+import type { ChatMessage, Logger } from '@wappajs/core';
 import type { ChatCompletion } from 'openai/resources/chat/completions';
 import { fromOpenAIResponse, toOpenAIMessages, toOpenAITools } from './mapping.js';
 

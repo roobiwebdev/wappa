@@ -11,7 +11,7 @@ agent are skipped, so a human can reply from the linked phone or business inbox 
 the bot talking over them.
 
 ```ts
-import { Agent, Bot, defineTool } from '@wappa/core';
+import { Agent, Bot, defineTool } from '@wappajs/core';
 import { z } from 'zod';
 
 const OPERATOR_CHAT_ID = process.env.OPERATOR_CHAT_ID!; // e.g. a Baileys JID or a phone number
@@ -171,7 +171,7 @@ and `hears()` work on the transcript too.
 Core ships a fixed-window per-chat limiter as middleware:
 
 ```ts
-import { rateLimit } from '@wappa/core';
+import { rateLimit } from '@wappajs/core';
 
 bot.use(rateLimit({
   windowMs: 60_000,  // default

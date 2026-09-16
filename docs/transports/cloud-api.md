@@ -1,4 +1,4 @@
-# Cloud API transport (`@wappa/cloud-api`)
+# Cloud API transport (`@wappajs/cloud-api`)
 
 `CloudApiTransport` speaks the **official WhatsApp Cloud API**: inbound messages arrive
 via a Meta webhook, outbound messages go out through the Graph API. No Meta SDK — just
@@ -12,7 +12,7 @@ message has `isGroup: false` and `chatId === senderId` (the sender's phone numbe
 ## Options
 
 ```ts
-import { CloudApiTransport } from '@wappa/cloud-api';
+import { CloudApiTransport } from '@wappajs/cloud-api';
 
 const transport = new CloudApiTransport({
   accessToken: '...',            // required — Graph API access token

@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
-import type { OutboundPayload } from '@wappa/core';
+import type { OutboundPayload } from '@wappajs/core';
 import { buildSendBody, isHttpUrl, mapWebhookPayload, type InboundMappingDeps } from './mapping.js';
 
 const WAMID = 'wamid.HBgLMTU1NTEyMzQ1NjcVAgASGBQzQTdCNEU1RDlEMjA3NUFCMkYzRQA=';

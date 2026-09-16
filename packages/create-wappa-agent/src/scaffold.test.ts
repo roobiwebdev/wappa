@@ -110,9 +110,9 @@ describe('scaffoldProject', () => {
     };
     expect(pkg.type).toBe('module');
     expect(pkg.dependencies).toEqual({
-      '@wappa/core': `^${ownVersion}`,
-      [`@wappa/${transport}`]: `^${ownVersion}`,
-      [`@wappa/${provider}`]: `^${ownVersion}`,
+      '@wappajs/core': `^${ownVersion}`,
+      [`@wappajs/${transport}`]: `^${ownVersion}`,
+      [`@wappajs/${provider}`]: `^${ownVersion}`,
     });
     expect(pkg.scripts['build']).toBe('tsc');
     expect(pkg.scripts['start']).toBe('node --env-file=.env dist/index.js');

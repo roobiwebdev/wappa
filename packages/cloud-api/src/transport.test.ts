@@ -6,7 +6,7 @@
 import { createServer, type Server } from 'node:http';
 import type { AddressInfo } from 'node:net';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import type { InboundMessage, Logger } from '@wappa/core';
+import type { InboundMessage, Logger } from '@wappajs/core';
 import { CloudApiTransport, type CloudApiTransportOptions } from './transport.js';
 import { computeSignature, readRawBody } from './webhook.js';
 

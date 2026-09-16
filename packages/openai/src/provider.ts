@@ -10,7 +10,7 @@ import {
   type GenerateResult,
   type Logger,
   type Provider,
-} from '@wappa/core';
+} from '@wappajs/core';
 import type {
   ChatCompletion,
   ChatCompletionCreateParamsNonStreaming,
@@ -136,7 +136,7 @@ export class OpenAIProvider implements Provider {
         if (!this.warnedTemperature) {
           this.warnedTemperature = true;
           this.logger.warn(
-            `@wappa/openai: model ${this.model} does not support temperature; ignoring`
+            `@wappajs/openai: model ${this.model} does not support temperature; ignoring`
           );
         }
       } else {
@@ -148,7 +148,7 @@ export class OpenAIProvider implements Provider {
     const result = fromOpenAIResponse(resp, this.logger);
     if (result.finishReason === 'length' && result.text === null) {
       this.logger.warn(
-        '@wappa/openai: completion budget exhausted before any output ' +
+        '@wappajs/openai: completion budget exhausted before any output ' +
           "(finishReason 'length' with empty content); consider raising maxTokens",
         { model: this.model }
       );

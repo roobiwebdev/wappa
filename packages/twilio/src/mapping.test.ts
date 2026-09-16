@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
-import type { Logger } from '@wappa/core';
+import type { Logger } from '@wappajs/core';
 import {
   buildSendParams,
   ensureWhatsappPrefix,

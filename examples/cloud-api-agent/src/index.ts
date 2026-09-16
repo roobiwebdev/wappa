@@ -11,9 +11,9 @@
  * Env (see .env.example): WHATSAPP_ACCESS_TOKEN, WHATSAPP_PHONE_NUMBER_ID,
  * WHATSAPP_VERIFY_TOKEN, WHATSAPP_APP_SECRET, OPENAI_API_KEY, PORT.
  */
-import { Agent, Bot, consoleLogger, defineTool } from '@wappa/core';
-import { CloudApiTransport } from '@wappa/cloud-api';
-import { OpenAIProvider } from '@wappa/openai';
+import { Agent, Bot, consoleLogger, defineTool } from '@wappajs/core';
+import { CloudApiTransport } from '@wappajs/cloud-api';
+import { OpenAIProvider } from '@wappajs/openai';
 import { z } from 'zod';
 
 const logger = consoleLogger();

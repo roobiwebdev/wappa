@@ -7,14 +7,14 @@
  * prefer the Cloud API transport for production.
  */
 import { chmod, mkdir } from 'node:fs/promises';
-import { consoleLogger, toPayload } from '@wappa/core';
+import { consoleLogger, toPayload } from '@wappajs/core';
 import type {
   Logger,
   OutboundContent,
   SendResult,
   Transport,
   TransportHandlers,
-} from '@wappa/core';
+} from '@wappajs/core';
 import {
   DisconnectReason,
   downloadMediaMessage,

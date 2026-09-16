@@ -1,15 +1,49 @@
 {
-  "name": "@wappa/anthropic",
-  "version": "0.1.0",
+  "name": "@wappajs/anthropic",
+  "version": "0.1.1",
   "description": "Anthropic (Claude) LLM provider for wappa WhatsApp agents.",
   "type": "module",
   "license": "MIT",
-  "engines": { "node": ">=20" },
+  "author": "Sifen Fisaha",
+  "homepage": "https://github.com/sifenfisaha/wappa#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sifenfisaha/wappa.git",
+    "directory": "packages/anthropic"
+  },
+  "bugs": {
+    "url": "https://github.com/sifenfisaha/wappa/issues"
+  },
+  "engines": {
+    "node": ">=20"
+  },
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
-  "exports": { ".": { "types": "./dist/index.d.ts", "default": "./dist/index.js" } },
-  "files": ["dist"],
-  "scripts": { "build": "tsc -b", "test": "vitest run" },
-  "dependencies": { "@anthropic-ai/sdk": "^0.123.0", "@wappa/core": "^0.1.0" },
-  "keywords": ["anthropic", "claude", "wappa", "llm", "provider"]
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "tsc -b",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.123.0",
+    "@wappajs/core": "^0.1.1"
+  },
+  "keywords": [
+    "anthropic",
+    "claude",
+    "wappa",
+    "llm",
+    "provider"
+  ]
 }

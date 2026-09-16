@@ -1,8 +1,8 @@
 /**
- * @wappa/core — transport-agnostic core for building WhatsApp agents.
+ * @wappajs/core — transport-agnostic core for building WhatsApp agents.
  *
  * Public API. Testing utilities (MockTransport, ScriptedProvider) are exported only
- * via the `@wappa/core/testing` subpath.
+ * via the `@wappajs/core/testing` subpath.
  */
 export * from './messages.js';
 export * from './transport.js';

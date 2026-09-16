@@ -1,5 +1,5 @@
 /**
- * @wappa/twilio — Twilio WhatsApp (BSP) transport for wappa.
+ * @wappajs/twilio — Twilio WhatsApp (BSP) transport for wappa.
  *
  * Form-encoded Twilio webhook (inbound) + Messages REST API with basic auth
  * (outbound), built on node:http, node:crypto and the global fetch — no

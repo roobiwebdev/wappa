@@ -21,7 +21,7 @@ Design pillars:
    cross-cutting concern (auth, rate limiting, logging, handoff) is a middleware.
 4. **Batteries included, swappable**: in-memory + file session stores, mock
    transport + scripted provider for testing, rate-limit middleware, CLI scaffolder.
-5. **Testability is a feature**: `@wappa/core/testing` ships `MockTransport` and
+5. **Testability is a feature**: `@wappajs/core/testing` ships `MockTransport` and
    `ScriptedProvider` so users can unit-test bots without WhatsApp or an LLM key.
 
 ## Monorepo layout
@@ -43,11 +43,11 @@ wappa/
 │   ├── testing.md
 │   └── recipes.md              # handoff, media, groups, proactive messages, rate limits
 ├── packages/
-│   ├── core/                   # @wappa/core
-│   ├── baileys/                # @wappa/baileys
-│   ├── cloud-api/              # @wappa/cloud-api
-│   ├── anthropic/              # @wappa/anthropic
-│   ├── openai/                 # @wappa/openai
+│   ├── core/                   # @wappajs/core
+│   ├── baileys/                # @wappajs/baileys
+│   ├── cloud-api/              # @wappajs/cloud-api
+│   ├── anthropic/              # @wappajs/anthropic
+│   ├── openai/                 # @wappajs/openai
 │   └── create-wappa-agent/      # create-wappa-agent (npm create wappa-agent)
 └── examples/
     ├── echo-bot/               # no LLM: middleware + router only, MockTransport demo + baileys
@@ -67,12 +67,12 @@ Versions (already resolved against the registry, do not change): `baileys@7.0.0-
 
 ---
 
-# @wappa/core
+# @wappajs/core
 
 Dependencies: `zod` only. Dev: vitest, typescript.
 
-Exports (package root `@wappa/core`): everything below except the testing utilities.
-Subpath export `@wappa/core/testing`: `MockTransport`, `ScriptedProvider`.
+Exports (package root `@wappajs/core`): everything below except the testing utilities.
+Subpath export `@wappajs/core/testing`: `MockTransport`, `ScriptedProvider`.
 
 ## Message model (`src/messages.ts`)
 
@@ -554,7 +554,7 @@ export function rateLimit(opts?: {
 The per-chat window map must not grow unboundedly: when an insert grows it past a
 threshold (1000), sweep out all expired windows.
 
-## Testing utilities (`src/testing.ts`, exported as `@wappa/core/testing`)
+## Testing utilities (`src/testing.ts`, exported as `@wappajs/core/testing`)
 
 ```ts
 /** In-memory transport for tests. */
@@ -612,10 +612,10 @@ MockTransport + ScriptedProvider.
 
 ---
 
-# @wappa/baileys
+# @wappajs/baileys
 
 Deps: `baileys@7.0.0-rc14`, `qrcode-terminal`, `pino` (baileys wants a pino-like logger),
-`@wappa/core` (workspace). **Verify all baileys API names against the installed
+`@wappajs/core` (workspace). **Verify all baileys API names against the installed
 `node_modules/baileys` type declarations before writing code — do not trust memory; the
 7.x RC renamed things.**
 
@@ -674,9 +674,9 @@ rendering tested.
 
 ---
 
-# @wappa/cloud-api
+# @wappajs/cloud-api
 
-Deps: `@wappa/core` only (use global `fetch` — Node 20+). No Meta SDK.
+Deps: `@wappajs/core` only (use global `fetch` — Node 20+). No Meta SDK.
 
 ```ts
 export interface CloudApiTransportOptions {
@@ -760,9 +760,9 @@ run the transport against a real `node:http` server on an ephemeral port with a 
 
 ---
 
-# @wappa/twilio
+# @wappajs/twilio
 
-Deps: `@wappa/core` only (global `fetch`, `node:http`, `node:crypto` — no Twilio SDK).
+Deps: `@wappajs/core` only (global `fetch`, `node:http`, `node:crypto` — no Twilio SDK).
 Twilio is a WhatsApp BSP: inbound arrives as form-encoded webhooks, outbound goes
 through the Twilio Messages REST API with basic auth.
 
@@ -851,15 +851,15 @@ setup, webhookUrl/proxy caveat, the 24-hour session window + template limitation
 capability table vs the other transports (no buttons, no typing, no read receipts,
 URL-only outbound media).
 
-create-wappa-agent: `--transport` gains `twilio` (deps @wappa/core + @wappa/twilio +
+create-wappa-agent: `--transport` gains `twilio` (deps @wappajs/core + @wappajs/twilio +
 provider; .env.example: TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, TWILIO_WHATSAPP_NUMBER,
 PORT; README documents the sandbox flow).
 
 ---
 
-# @wappa/anthropic
+# @wappajs/anthropic
 
-Deps: `@anthropic-ai/sdk@^0.123.0`, `@wappa/core`. Verify against installed SDK types.
+Deps: `@anthropic-ai/sdk@^0.123.0`, `@wappajs/core`. Verify against installed SDK types.
 
 ```ts
 export interface AnthropicProviderOptions {
@@ -896,9 +896,9 @@ and unit-tested; provider itself tested with an injected fake client.
 
 ---
 
-# @wappa/openai
+# @wappajs/openai
 
-Deps: `openai@^7.9.0`, `@wappa/core`. Verify against installed SDK types. Use the **Chat
+Deps: `openai@^7.9.0`, `@wappajs/core`. Verify against installed SDK types. Use the **Chat
 Completions** API (max compatibility incl. OpenAI-compatible local servers).
 
 ```ts
@@ -940,7 +940,7 @@ Zero-dependency scaffolder run via `npm create wappa-agent my-bot`. `bin` → `d
 with shebang. Interactive prompts via `node:readline/promises` (skippable with flags):
 `--transport baileys|cloud-api`, `--provider anthropic|openai`, `--yes`.
 
-Generates: package.json (deps: @wappa/core + chosen transport + chosen provider pinned to
+Generates: package.json (deps: @wappajs/core + chosen transport + chosen provider pinned to
 the same version as the CLI), tsconfig, src/index.ts wired for the chosen combo
 (reads env vars, .env.example included), .gitignore, README with run instructions.
 Templates live in `templates/` as plain text files with `__PLACEHOLDER__` substitution and
@@ -981,8 +981,8 @@ plus a `dev` script `node --watch`. Keep each under ~120 lines, heavily commente
   skipLibCheck (baileys types need it), noUncheckedIndexedAccess, exactOptionalPropertyTypes: false (pragmatic — optional-prop assignment friction not worth it).
 - Root `tsconfig.json`: `files: []`, references to every package + example.
 - Per-package `tsconfig.json`: extends base, rootDir src, outDir dist, include src,
-  exclude tests; `references` to @wappa/core where applicable.
-- Workspace deps: use `"@wappa/core": "^0.1.0"` (npm workspaces links it locally and it
+  exclude tests; `references` to @wappajs/core where applicable.
+- Workspace deps: use `"@wappajs/core": "^0.1.0"` (npm workspaces links it locally and it
   stays publishable). All packages version `0.1.0`.
 - `.gitignore`: node_modules, dist, *.tsbuildinfo, wappa-auth, .env, and BOTH session
   dir names (`sessions/`, `.wappa-sessions/`) — session files are customer PII.

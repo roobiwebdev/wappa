@@ -12,7 +12,7 @@ import {
   type SendResult,
   type Transport,
   type TransportHandlers,
-} from '@wappa/core';
+} from '@wappajs/core';
 import {
   buildSendParams,
   ensureWhatsappPrefix,

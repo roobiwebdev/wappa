@@ -7,20 +7,20 @@
  *     per-message scratch space shared between middleware and handlers
  *   - swapping BaileysTransport for MockTransport in tests
  */
-import { Bot, consoleLogger, type Context, type Middleware } from '@wappa/core';
-import { BaileysTransport } from '@wappa/baileys';
+import { Bot, consoleLogger, type Context, type Middleware } from '@wappajs/core';
+import { BaileysTransport } from '@wappajs/baileys';
 
 const logger = consoleLogger();
 
 // Baileys logs in as a *personal* WhatsApp number: the first run prints a QR
 // code to scan with your phone, and credentials are cached in ./wappa-auth so
 // later runs reconnect silently. Unofficial client — use a number you can
-// afford to lose; prefer @wappa/cloud-api for production.
+// afford to lose; prefer @wappajs/cloud-api for production.
 const transport = new BaileysTransport({ authDir: './wappa-auth' });
 
 // In tests, swap the transport for the in-memory mock — nothing else changes:
 //
-//   import { MockTransport } from '@wappa/core/testing';
+//   import { MockTransport } from '@wappajs/core/testing';
 //   const transport = new MockTransport();
 //   /* after bot.start(): */
 //   await transport.receive({ text: '/ping' });          // full pipeline runs

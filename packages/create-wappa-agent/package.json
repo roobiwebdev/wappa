@@ -1,12 +1,37 @@
 {
   "name": "create-wappa-agent",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Scaffold a new wappa WhatsApp agent project: npm create wappa-agent my-bot",
   "type": "module",
   "license": "MIT",
-  "engines": { "node": ">=20" },
-  "bin": { "create-wappa-agent": "./dist/index.js" },
-  "files": ["dist", "templates"],
-  "scripts": { "build": "tsc -b", "test": "vitest run" },
-  "keywords": ["whatsapp", "wappa", "scaffold", "create"]
+  "author": "Sifen Fisaha",
+  "homepage": "https://github.com/sifenfisaha/wappa#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sifenfisaha/wappa.git",
+    "directory": "packages/create-wappa-agent"
+  },
+  "bugs": {
+    "url": "https://github.com/sifenfisaha/wappa/issues"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "bin": {
+    "create-wappa-agent": "dist/index.js"
+  },
+  "files": [
+    "dist",
+    "templates"
+  ],
+  "scripts": {
+    "build": "tsc -b",
+    "test": "vitest run"
+  },
+  "keywords": [
+    "whatsapp",
+    "wappa",
+    "scaffold",
+    "create"
+  ]
 }

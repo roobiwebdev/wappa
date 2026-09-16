@@ -3,6 +3,7 @@
  * with node in an os.tmpdir() sandbox — exactly how npm runs it.
  */
 import { execFile } from 'node:child_process';
+import { readFileSync } from 'node:fs';
 import { mkdir, mkdtemp, readFile, rm, symlink, writeFile } from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
@@ -16,6 +17,19 @@ const PKG_DIR = fileURLToPath(new URL('..', import.meta.url));
 const REPO_ROOT = path.resolve(PKG_DIR, '..', '..');
 const TSC = path.join(REPO_ROOT, 'node_modules', 'typescript', 'lib', 'tsc.js');
 const CLI = path.join(PKG_DIR, 'dist', 'index.js');
+
+/** The npm scope the packages currently live under — read it, don't hardcode it. */
+const SCOPE = (
+  JSON.parse(
+    readFileSync(path.join(PKG_DIR, '..', 'core', 'package.json'), 'utf8')
+  ) as { name: string }
+).name.split('/')[0] as string;
+
+/** The scaffolder pins generated deps to `^<its own version>`; follow it, don't hardcode. */
+const DEP_RANGE = `^${
+  (JSON.parse(readFileSync(path.join(PKG_DIR, 'package.json'), 'utf8')) as { version: string })
+    .version
+}`;
 
 let sandbox: string;
 
@@ -47,12 +61,12 @@ async function runCli(
  * symlinking them into its node_modules — proves the starter code compiles.
  */
 async function typecheck(dir: string, framDeps: string[]): Promise<void> {
-  await mkdir(path.join(dir, 'node_modules', '@wappa'), { recursive: true });
+  await mkdir(path.join(dir, 'node_modules', SCOPE), { recursive: true });
   await mkdir(path.join(dir, 'node_modules', '@types'), { recursive: true });
   for (const dep of framDeps) {
     await symlink(
       path.join(REPO_ROOT, 'packages', dep),
-      path.join(dir, 'node_modules', '@wappa', dep)
+      path.join(dir, 'node_modules', SCOPE, dep)
     );
   }
   await symlink(
@@ -86,9 +100,9 @@ describe('built CLI', () => {
       };
       expect(pkg.name).toBe('my-bot');
       expect(pkg.dependencies).toEqual({
-        '@wappa/core': '^0.1.0',
-        '@wappa/baileys': '^0.1.0',
-        '@wappa/anthropic': '^0.1.0',
+        '@wappajs/core': DEP_RANGE,
+        '@wappajs/baileys': DEP_RANGE,
+        '@wappajs/anthropic': DEP_RANGE,
       });
 
       const index = await readFile(path.join(dir, 'src', 'index.ts'), 'utf8');
@@ -122,9 +136,9 @@ describe('built CLI', () => {
         dependencies: Record<string, string>;
       };
       expect(pkg.dependencies).toEqual({
-        '@wappa/core': '^0.1.0',
-        '@wappa/cloud-api': '^0.1.0',
-        '@wappa/openai': '^0.1.0',
+        '@wappajs/core': DEP_RANGE,
+        '@wappajs/cloud-api': DEP_RANGE,
+        '@wappajs/openai': DEP_RANGE,
       });
 
       const index = await readFile(path.join(dir, 'src', 'index.ts'), 'utf8');
@@ -160,9 +174,9 @@ describe('built CLI', () => {
         dependencies: Record<string, string>;
       };
       expect(pkg.dependencies).toEqual({
-        '@wappa/core': '^0.1.0',
-        '@wappa/twilio': '^0.1.0',
-        '@wappa/anthropic': '^0.1.0',
+        '@wappajs/core': DEP_RANGE,
+        '@wappajs/twilio': DEP_RANGE,
+        '@wappajs/anthropic': DEP_RANGE,
       });
 
       const index = await readFile(path.join(dir, 'src', 'index.ts'), 'utf8');
@@ -212,9 +226,9 @@ describe('built CLI', () => {
       await readFile(path.join(sandbox, 'defaults-bot', 'package.json'), 'utf8')
     ) as { dependencies: Record<string, string> };
     expect(Object.keys(pkg.dependencies).sort()).toEqual([
-      '@wappa/anthropic',
-      '@wappa/baileys',
-      '@wappa/core',
+      '@wappajs/anthropic',
+      '@wappajs/baileys',
+      '@wappajs/core',
     ]);
   });
 
@@ -249,8 +263,8 @@ describe('built CLI', () => {
     const pkg = JSON.parse(
       await readFile(path.join(sandbox, 'prompted-bot', 'package.json'), 'utf8')
     ) as { dependencies: Record<string, string> };
-    expect(pkg.dependencies['@wappa/cloud-api']).toBe('^0.1.0');
-    expect(pkg.dependencies['@wappa/openai']).toBe('^0.1.0');
+    expect(pkg.dependencies['@wappajs/cloud-api']).toBe(DEP_RANGE);
+    expect(pkg.dependencies['@wappajs/openai']).toBe(DEP_RANGE);
   });
 
   it('prints help with --help', async () => {
